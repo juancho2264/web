@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath id='logo-wave-1' d='M5 20C5 20 10 10 15 20C20 30 25 20 30 10 35 20' stroke='%2300F7FF' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath id='logo-wave-2' d='M5 25C5 25 10 15 15 25C20 35 25 25 30 15 35 25' stroke='%2332FF6A' stroke-width='4' stroke-linecap='round' stroke-linejoin='round' opacity='0.8'/%3E%3C/svg%3E">
+    <title>Wavve - Plataforma de Streaming</title>
+    
+    <!-- Dependencias Externas -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Hoja de Estilos Personalizada -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Overlay para cerrar sidebar en móvil -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <!-- Barra de Navegación Lateral -->
+    <nav id="sidebar" class="sidebar">
+        <div>
+            <div class="logo-container" onclick="cambiarVista('inicio')">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path id="logo-wave-1" d="M5 20C5 20 10 10 15 20C20 30 25 20 30 10 35 20" stroke="var(--accent-primary)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path id="logo-wave-2" d="M5 25C5 25 10 15 15 25C20 35 25 25 30 15 35 25" stroke="var(--accent-secondary)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+                    </svg>
+                </div>
+                <h1 class="logo-text">Wavve</h1>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-item active" data-view="inicio"><i class="fas fa-home"></i><span>Inicio</span></button>
+                <button class="nav-item" data-view="explorar"><i class="fas fa-compass"></i><span>Explorar</span></button>
+                <button class="nav-item" data-view="siguiendo"><i class="fas fa-heart"></i><span>Siguiendo</span></button>
+                <button class="nav-item" data-view="wavves"><i class="fas fa-bolt"></i><span>Wavves</span></button>
+                <button class="nav-item" data-view="guardados"><i class="fas fa-bookmark"></i><span>Guardados</span></button>
+            </div>
+        </div>
+        <div class="mt-auto">
+             <div class="nav-menu">
+                <button class="nav-item" data-view="configuracion"><i class="fas fa-cog"></i><span>Configuración</span></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header para Móvil -->
+    <header class="mobile-header">
+        <button id="menu-toggle-btn" class="menu-toggle-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="logo-container mobile-logo-container" onclick="cambiarVista('inicio')">
+            <div class="logo-icon">
+                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 20C5 20 10 10 15 20C20 30 25 20 30 10 35 20" stroke="var(--accent-primary)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 25C5 25 10 15 15 25C20 35 25 25 30 15 35 25" stroke="var(--accent-secondary)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+                </svg>
+            </div>
+            <h1 class="logo-text">Wavve</h1>
+        </div>
+        <div style="width: 40px;"></div>
+    </header>
+
+
+    <!-- Contenido Principal -->
+    <main id="mainContent" class="main-content">
+        <div class="content">
+            
+            <!-- Vista de Inicio -->
+            <section id="inicio-view" class="view active">
+                <div class="hero">
+                    <div class="hero-content">
+                        <h2 class="hero-title">Descubre tu próximo stream favorito</h2>
+                        <p class="hero-description">Explora clips cortos y sumérgete en el contenido que te apasiona. La nueva ola del streaming está aquí.</p>
+                        <button class="btn btn-primary btn-lg" onclick="cambiarVista('wavves')">Empezar a explorar</button>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <h3 class="text-white mb-4">Streams Destacados</h3>
+                    <div class="row" id="featured-streams"></div>
+                </div>
+
+                <div class="mb-5">
+                    <h3 class="text-white mb-4">Wavves Destacados</h3>
+                    <div class="row" id="latest-clips"></div>
+                </div>
+                
+                <div id="about-wavve" class="mb-5 wave-section">
+                    <div class="wave-content">
+                        <h3 class="text-white mb-4">¿Qué es Wavve?</h3>
+                        <p class="text-primary fs-5">Wavve revoluciona la forma en que descubres contenido. En lugar de navegar por interminables listas de streams, te sumerges en un feed de clips cortos y dinámicos llamados "Wavves".</p>
+                        <ul class="text-secondary list-unstyled mt-4">
+                            <li class="mb-3 d-flex align-items-start"><i class="fas fa-search-location fa-lg text-accent-primary mt-1 me-3"></i><span><strong>Descubrimiento Rápido:</strong> Encuentra lo que te gusta en segundos. Si un Wavve te atrapa, salta directamente al stream en vivo con un solo clic.</span></li>
+                            <li class="mb-3 d-flex align-items-start"><i class="fas fa-link fa-lg text-accent-primary mt-1 me-3"></i><span><strong>Conexión Directa:</strong> Pasa de espectador pasivo a fan activo. Wavve te acerca a tus creadores favoritos como nunca antes.</span></li>
+                            <li class="d-flex align-items-start"><i class="fas fa-sliders-h fa-lg text-accent-primary mt-1 me-3"></i><span><strong>Tu Feed, Tus Reglas:</strong> Guarda los Wavves que te encantan y personaliza tu experiencia para ver siempre lo que más te interesa.</span></li>
+                        </ul>
+                    </div>
+                    <div class="wave-container">
+                        <div class="wave"></div>
+                        <div class="wave wave-2"></div>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-md-6 mb-4 mb-md-0">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="text-white mb-3"><i class="fas fa-compass text-accent-secondary me-2"></i> Misión o propósito</h4>
+                                <p class="text-secondary">En Wavve queremos que descubrir contenido en vivo sea tan simple como deslizar el dedo. Conectamos a creadores y audiencias en segundos, acortando distancias y multiplicando las oportunidades de conexión real.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="text-white mb-3"><i class="fas fa-tools text-accent-secondary me-2"></i> En desarrollo</h4>
+                                <p class="text-secondary">Actualmente estamos mejorando Wavve constantemente. Escuchamos tus sugerencias para construir la mejor experiencia de streaming del futuro.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Vista de Explorar -->
+            <section id="explorar-view" class="view">
+                <h2 class="text-white mb-4">Explorar Contenido</h2>
+                <div class="mb-4">
+                    <div class="input-group">
+                        <span class="input-group-text bg-dark border-secondary" style="border-radius: var(--border-radius) 0 0 var(--border-radius);"><i class="fas fa-search text-muted"></i></span>
+                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar streamers, juegos, categorías...">
+                    </div>
+                </div>
+                <div class="mb-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-white mb-0">Categorías Populares</h4>
+                        <button id="reset-filter-btn" class="btn btn-outline-primary btn-sm d-none" onclick="resetStreamerFilter()">Mostrar Todos</button>
+                    </div>
+                    <div class="row g-3" id="categories-grid"></div>
+                </div>
+                <div>
+                    <div class="d-flex align-items-center mb-3">
+                        <h4 class="text-white mb-0" id="streamers-title">Todos los Streamers</h4>
+                        <span class="text-muted ms-2" id="streamers-count"></span>
+                    </div>
+                    <div id="filtered-streamers" class="d-flex flex-column gap-3"></div>
+                </div>
+            </section>
+
+            <!-- Vista de Siguiendo -->
+            <section id="siguiendo-view" class="view">
+                 <h2 class="text-white mb-4">Siguiendo</h2>
+                <div class="mb-5">
+                    <div class="d-flex align-items-center mb-3 gap-2"><div class="live-dot"></div><h4 class="text-white mb-0">En Vivo Ahora</h4></div>
+                    <div id="live-streamers" class="d-flex flex-column gap-3"></div>
+                </div>
+                <div class="mb-5">
+                    <h4 class="text-muted mb-3">Canales Offline</h4>
+                    <div id="offline-streamers" class="d-flex flex-column gap-3"></div>
+                </div>
+            </section>
+
+            <!-- Vista de Wavves (ESTRUCTURA ACTUALIZADA)-->
+            <section id="wavves-view" class="view">
+                <div class="wavves-header">
+                    <h2 class="wavves-title mb-2">Wavves Feed</h2>
+                    <p class="text-muted">Desliza o usa los botones para descubrir</p>
+                </div>
+                <div id="wavves-container" class="wavves-container">
+                    <div id="current-clip-container">
+                        <!-- El clip actual se cargará aquí -->
+                    </div>
+                    <!-- Botones de navegación lateral -->
+                    <button class="wavve-nav-btn prev" onclick="clipAnterior()"><i class="fas fa-chevron-left"></i></button>
+                    <button class="wavve-nav-btn next" onclick="clipSiguiente()"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <!-- Vista de Guardados -->
+            <section id="guardados-view" class="view">
+                <h2 class="text-white mb-4">Guardados</h2>
+                <div id="saved-clips" class="d-flex flex-column gap-3"></div>
+            </section>
+
+            <!-- Vista de Configuración -->
+            <section id="configuracion-view" class="view">
+                <h2 class="text-white mb-4">Configuración</h2>
+                <div class="settings-container" style="max-width: 600px;">
+                     <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title text-white">Notificaciones</h5>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="pushNotifications" checked>
+                                <label class="form-check-label text-white" for="pushNotifications">Notificaciones push</label>
+                            </div>
+                             <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="soundNotifications">
+                                <label class="form-check-label text-white" for="soundNotifications">Sonido de notificaciones</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                             <h5 class="card-title text-white">Reproducción</h5>
+                             <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="autoplay" checked>
+                                <label class="form-check-label text-white" for="autoplay">Reproducción automática de Wavves</label>
+                            </div>
+                            <div>
+                                <label for="videoQuality" class="form-label text-white">Calidad de video preferida</label>
+                                <select id="videoQuality" class="form-select">
+                                    <option value="auto">Automática</option><option value="1080p">1080p (Full HD)</option><option value="720p">720p (HD)</option><option value="480p">480p (Estándar)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Sidebar Derecho -->
+        <aside id="rightSidebar" class="right-sidebar">
+            <div>
+                <h5 class="text-white mb-4">Canales Recomendados</h5>
+                <div id="recommended-streamers" class="d-flex flex-column gap-3"></div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Modal de Video -->
+    <div id="videoModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="d-flex align-items-center gap-3">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i class="fas fa-arrow-left"></i></button>
+                        <div class="d-flex align-items-center gap-2">
+                             <span class="badge badge-live">EN VIVO</span>
+                             <span class="text-white small"><i class="fas fa-eye me-1"></i> <span id="modal-viewer-count"></span></span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="followBtn" onmouseover="manejarHoverSeguir(true)" onmouseout="manejarHoverSeguir(false)" onclick="alternarSeguir()">
+                        <i class="fas fa-heart me-2"></i><span id="followText">Seguir</span>
+                    </button>
+                </div>
+                <div class="modal-body p-0">
+                    <!-- Contenido del Stream (Video + Info) -->
+                    <div class="stream-content">
+                        <div id="modal-video-container">
+                            <!-- El reproductor de video se insertará aquí -->
+                        </div>
+                        <div class="stream-info-bar">
+                            <div class="d-flex align-items-center gap-3">
+                                <img id="modal-avatar" class="avatar" src="" alt="avatar">
+                                <div class="flex-grow-1">
+                                    <h5 class="text-white mb-0" id="modal-streamer-name"></h5>
+                                    <p class="text-white small mb-1" id="modal-stream-title"></p>
+                                    <div id="stream-tags"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Chat -->
+                    <div class="chat-sidebar">
+                        <div class="chat-header text-center"><h6 class="text-white mb-0">Chat del Stream</h6></div>
+                        <div class="chat-messages" id="chatMessages"></div>
+                        <div class="chat-input">
+                            <div class="input-group">
+                                <input type="text" id="chatInput" class="form-control" placeholder="Escribe un mensaje...">
+                                <button class="btn btn-primary" onclick="enviarMensajeChat()"><i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Streamer Offline -->
+    <div id="offlineModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-white">Streamer Offline</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center text-white">Este streamer no se encuentra en vivo en este momento.</p>
+                </div>
+                <div class="modal-footer border-0 justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
